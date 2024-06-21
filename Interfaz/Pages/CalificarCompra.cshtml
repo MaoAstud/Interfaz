@@ -1,0 +1,28 @@
+﻿@page
+@model Interfaz.Pages.CalificarCompraModel
+@{
+    ViewData["Title"] = "Calificar Compra";
+}
+
+<h2>Calificar Compra</h2>
+
+<form method="post">
+    <div>
+        <label for="rating">Grado de satisfacción (1-5):</label>
+        <select id="rating" name="rating" required>
+            <option value="">Seleccione...</option>
+            <option value="1">1 - Muy Insatisfecho</option>
+            <option value="2">2 - Insatisfecho</option>
+            <option value="3">3 - Neutral</option>
+            <option value="4">4 - Satisfecho</option>
+            <option value="5">5 - Muy Satisfecho</option>
+        </select>
+    </div>
+    <div>
+        <label for="comentario">Comentario:</label>
+        <textarea id="comentario" name="comentario" rows="4" cols="50"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+</form>
+
+

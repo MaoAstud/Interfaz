@@ -1,0 +1,63 @@
+﻿@page "{tienda}"
+@model Interfaz.Pages.CatalogoModel
+@{
+    ViewData["Title"] = "Catálogo de " + Model.Tienda;
+}
+
+<h2 class="text-center my-4">Catálogo de @Model.Tienda</h2>
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12 text-right">
+            <a asp-page="/Tiendas" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        @foreach (var producto in Model.Productos)
+        {
+            <div class="col-md-4 text-center">
+                <div class="card shadow-sm mb-4">
+                    <img src="@producto.ImagenUrl" class="card-img-top" alt="@producto.Nombre">
+                    <div class="card-body">
+                        <h5 class="card-title">@producto.Nombre</h5>
+                        <p class="card-text">Precio: $@producto.Precio</p>
+                        <form method="post" asp-page-handler="AgregarAlCarrito">
+                            <input type="hidden" name="Id" value="@producto.Id" />
+                            <input type="hidden" name="Nombre" value="@producto.Nombre" />
+                            <input type="hidden" name="Precio" value="@producto.Precio" />
+                            <input type="hidden" name="ImagenUrl" value="@producto.ImagenUrl" /> <!-- Nueva línea para la URL de la imagen -->
+                            <button type="submit" class="btn btn-primary">Agregar al Carrito</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 0.5rem;
+    }
+
+    .card-img-top {
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        color: #2c3e50;
+    }
+</style>
+
+

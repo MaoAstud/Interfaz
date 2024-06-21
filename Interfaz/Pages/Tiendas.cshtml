@@ -1,0 +1,79 @@
+﻿@page
+@model Interfaz.Pages.TiendasModel
+@{
+    ViewData["Title"] = "Tiendas";
+}
+<h2 class="text-center my-4">Marcas</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <div class="card shadow-sm">
+                <img src="/Imagenes/LogoNike.jpg" class="card-img-top" alt="Nike">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a asp-page="/Catalogo" asp-route-tienda="Nike" class="text-decoration-none text-dark btn-custom">Nike</a>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="card shadow-sm">
+                <img src="/Imagenes/LogoAdidas.jpg" class="card-img-top" alt="Adidas">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a asp-page="/Catalogo" asp-route-tienda="Adidas" class="text-decoration-none text-dark btn-custom">Adidas</a>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="card shadow-sm">
+                <img src="/Imagenes/LogoMao.jpg" class="card-img-top" alt="Mao con N">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a asp-page="/Catalogo" asp-route-tienda="MaoConN" class="text-decoration-none text-dark btn-custom">Mao con N</a>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        margin: 1rem 0;
+        border-radius: 0.5rem;
+    }
+
+    .card-img-top {
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+    }
+
+    .btn-custom {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background-color: #1abc9c; /* Turquoise */
+        color: white;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-custom:hover {
+            background-color: #16a085; /* Darker Turquoise */
+        }
+
+    .card-title a {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #2c3e50; /* MidnightBlue */
+        text-decoration: none;
+    }
+
+        .card-title a:hover {
+            color: #1abc9c; /* Turquoise */
+        }
+</style>
+

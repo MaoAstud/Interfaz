@@ -1,0 +1,66 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Página Principal";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Tienda de Zapatos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <style>
+        body {
+            background-color: #f0f8ff; /* AliceBlue */
+            color: #2c3e50; /* MidnightBlue */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .jumbotron {
+            background-color: #1abc9c; /* Turquoise */
+            color: white;
+            padding: 2rem 2rem;
+            margin-top: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-custom {
+            background-color: #e74c3c; /* Alizarin */
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.25rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+            .btn-custom:hover {
+                background-color: #c0392b; /* Pomegranate */
+                transform: scale(1.05);
+            }
+
+        .container {
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1 class="display-4">¡Bienvenido a la Tienda de Zapatos!</h1>
+            <p class="lead">Descubre las mejores marcas de zapatos en un solo lugar.</p>
+            <a class="btn btn-custom" asp-page="/Tiendas">Visitar las Tiendas</a>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+

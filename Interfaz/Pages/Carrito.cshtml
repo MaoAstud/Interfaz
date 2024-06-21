@@ -1,0 +1,65 @@
+﻿@page
+@model Interfaz.Pages.CarritoModel
+@{
+    ViewData["Title"] = "Carrito de Compras";
+}
+
+<h2>Carrito de Compras</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ItemsCarrito)
+        {
+            <tr>
+                <td><img src="@item.ImagenUrl" alt="@item.Nombre" class="img-thumbnail" style="width: 100px; height: 100px;"></td>
+                <td class="align-middle">@item.Nombre</td>
+                <td class="align-middle">$@item.Precio</td>
+                <td class="align-middle">@item.Cantidad</td>
+                <td class="align-middle">$@(item.Precio * item.Cantidad)</td>
+                <td class="align-middle">
+                    <form method="post">
+                        <input type="hidden" name="Id" value="@item.Id" />
+                        <button type="submit" name="action" value="increase" class="btn btn-success btn-sm">+</button>
+                        <button type="submit" name="action" value="decrease" class="btn btn-warning btn-sm">-</button>
+                        <button type="submit" name="action" value="remove" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="d-flex justify-content-between">
+    <button class="btn btn-secondary" onclick="history.back()">Volver</button> <!-- Botón de Volver con JavaScript -->
+    <a asp-page="/MetodosDePago" class="btn btn-primary">Proceder a Comprar</a>
+</div>
+
+<style>
+    .table th, .table td {
+        vertical-align: middle;
+    }
+
+    .img-thumbnail {
+        margin-right: 10px;
+    }
+
+    .table td {
+        padding: 1rem;
+    }
+</style>
+
+
+
+
+
+

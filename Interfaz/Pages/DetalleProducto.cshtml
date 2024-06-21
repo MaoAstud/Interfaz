@@ -1,0 +1,26 @@
+﻿@page
+@model Interfaz.Pages.DetalleProductoModel
+@{
+    ViewData["Title"] = "Detalle de " + Model.Producto.Nombre;
+}
+
+<h2>Detalle de @Model.Producto.Nombre</h2>
+
+<div>
+    <p>@Model.Producto.Descripcion</p>
+    <p>Precio: $@Model.Producto.Precio</p>
+    <form method="post">
+        <div>
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" id="cantidad" name="cantidad" value="1" min="1" />
+        </div>
+        <input type="hidden" name="Id" value="@Model.Producto.Id" />
+        <input type="hidden" name="Nombre" value="@Model.Producto.Nombre" />
+        <input type="hidden" name="Precio" value="@Model.Producto.Precio" />
+        <input type="hidden" name="Descripcion" value="@Model.Producto.Descripcion" />
+        <input type="hidden" name="Tienda" value="@Model.Producto.Tienda" />
+        <input type="hidden" name="ImagenUrl" value="@Model.Producto.ImagenUrl" />
+        <button type="submit" class="btn btn-primary">Añadir al carrito</button>
+    </form>
+</div>
+

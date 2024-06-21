@@ -1,0 +1,111 @@
+﻿@page
+@model Interfaz.Pages.MetodosDePagoModel
+@{
+    ViewData["Title"] = "Métodos de Pago";
+}
+
+<h2>Métodos de Pago</h2>
+
+<form method="post" onsubmit="return validarFormulario()">
+    <div>
+        <label for="metodo">Seleccione un método de pago:</label>
+        <select id="metodo" name="metodo" onchange="mostrarFormulario()" required>
+            <option value="tarjeta">Seleccione</option>
+            <option value="tarjeta">Tarjeta de Crédito/Débito</option>
+            <option value="transferencia">Transferencia Bancaria</option>
+        </select>
+    </div>
+
+    <div id="formulario-tarjeta" style="display:none;">
+        <h3>Pago con Tarjeta</h3>
+        <div>
+            <label for="nombre">Nombre del titular:</label>
+            <input type="text" id="nombre-tarjeta" name="nombre" />
+        </div>
+        <div>
+            <label for="numero-tarjeta">Número de tarjeta:</label>
+            <input type="text" id="numero-tarjeta" name="numero-tarjeta" />
+        </div>
+        <div>
+            <label for="fecha-expiracion">Fecha de expiración:</label>
+            <input type="text" id="fecha-expiracion" name="fecha-expiracion" placeholder="MM/AA" />
+        </div>
+        <div>
+            <label for="cvv">CVV:</label>
+            <input type="text" id="cvv" name="cvv" />
+        </div>
+    </div>
+
+    <div id="formulario-transferencia" style="display:none;">
+        <h3>Transferencia Bancaria</h3>
+        <div>
+            <label for="nombre">Nombre del titular:</label>
+            <input type="text" id="nombre-transferencia" name="nombre" />
+        </div>
+        <div>
+            <label for="numero-cuenta">Número de cuenta:</label>
+            <input type="text" id="numero-cuenta" name="numero-cuenta" />
+        </div>
+        <div>
+            <label for="banco">Banco:</label>
+            <input type="text" id="banco" name="banco" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Pagar</button>
+</form>
+
+<script>
+    function mostrarFormulario() {
+        var metodo = document.getElementById("metodo").value;
+        document.getElementById("formulario-tarjeta").style.display = metodo === "tarjeta" ? "block" : "none";
+        document.getElementById("formulario-transferencia").style.display = metodo === "transferencia" ? "block" : "none";
+    }
+
+    function validarFormulario() {
+        var metodo = document.getElementById("metodo").value;
+        var esValido = true;
+        var mensaje = "Por favor, complete todos los campos obligatorios:\n";
+
+        if (metodo === "tarjeta") {
+            if (document.getElementById("nombre-tarjeta").value.trim() === "") {
+                esValido = false;
+                mensaje += "- Nombre del titular\n";
+            }
+            if (document.getElementById("numero-tarjeta").value.trim() === "") {
+                esValido = false;
+                mensaje += "- Número de tarjeta\n";
+            }
+            if (document.getElementById("fecha-expiracion").value.trim() === "") {
+                esValido = false;
+                mensaje += "- Fecha de expiración\n";
+            }
+            if (document.getElementById("cvv").value.trim() === "") {
+                esValido = false;
+                mensaje += "- CVV\n";
+            }
+        } else if (metodo === "transferencia") {
+            if (document.getElementById("nombre-transferencia").value.trim() === "") {
+                esValido = false;
+                mensaje += "- Nombre del titular\n";
+            }
+            if (document.getElementById("numero-cuenta").value.trim() === "") {
+                esValido = false;
+                mensaje += "- Número de cuenta\n";
+            }
+            if (document.getElementById("banco").value.trim() === "") {
+                esValido = false;
+                mensaje += "- Banco\n";
+            }
+        }
+
+        if (!esValido) {
+            alert(mensaje);
+        }
+
+        return esValido;
+    }
+</script>
+
+
+
