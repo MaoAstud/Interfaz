@@ -12,5 +12,4 @@
         public DateTime Fecha { get; set; }
         public string Origen { get; set; }  // Campo para especificar la base de datos de origen
     }
-
 }

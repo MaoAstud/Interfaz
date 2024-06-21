@@ -4,19 +4,31 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System.Linq;
+using Interfaz.Services;
+using System.Threading.Tasks;
 
 namespace Interfaz.Pages
 {
     public class CarritoModel : PageModel
     {
-        public List<ItemCarrito> ItemsCarrito { get; private set; }
+        private readonly ApiService _apiService;
 
-        public void OnGet()
+        public CarritoModel(ApiService apiService)
         {
-            ItemsCarrito = HttpContext.Session.GetObjectFromJson<List<ItemCarrito>>("Carrito") ?? new List<ItemCarrito>();
+            _apiService = apiService;
         }
 
-        public IActionResult OnPost(int id, string action)
+        public List<ItemCarrito> ItemsCarrito { get; private set; }
+
+        public async Task OnGetAsync()
+        {
+            ItemsCarrito = HttpContext.Session.GetObjectFromJson<List<ItemCarrito>>("Carrito") ?? new List<ItemCarrito>();
+
+            // Puedes cargar los datos del carrito desde el servidor si es necesario
+            // ItemsCarrito = await _apiService.GetAllCarritosAsync();
+        }
+
+        public async Task<IActionResult> OnPostAsync(int id, string action)
         {
             ItemsCarrito = HttpContext.Session.GetObjectFromJson<List<ItemCarrito>>("Carrito") ?? new List<ItemCarrito>();
             var item = ItemsCarrito.FirstOrDefault(i => i.Id == id);
@@ -40,6 +52,9 @@ namespace Interfaz.Pages
                     ItemsCarrito.Remove(item);
                 }
 
+                // Aquí puedes llamar al API para actualizar el carrito en el servidor
+                // await _apiService.UpdateCarritoAsync(id, item);
+
                 HttpContext.Session.SetObjectAsJson("Carrito", ItemsCarrito);
             }
 
@@ -56,5 +71,6 @@ namespace Interfaz.Pages
         }
     }
 }
+
 
 

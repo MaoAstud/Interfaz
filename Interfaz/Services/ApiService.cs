@@ -1,6 +1,7 @@
 ﻿namespace Interfaz.Services
 {
     using System.Net.Http;
+    using System.Net.Http.Headers;
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using Newtonsoft.Json;
@@ -266,6 +267,20 @@
             var response = await _httpClient.DeleteAsync($"/detalle/{id}/{origen}");
             response.EnsureSuccessStatusCode();
         }
-    }
 
+        // Aquí está el nuevo método para autenticar al usuario
+        public async Task<Usuario> AuthenticateUserAsync(string username, string password)
+        {
+            var json = JsonConvert.SerializeObject(new { Username = username, Password = password });
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync("/authenticate", content);
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<Usuario>(jsonResponse);
+            }
+            return null;
+        }
+    }
 }

@@ -16,6 +16,16 @@ builder.Services.AddAuthentication("CookieAuth")
         config.LoginPath = "/Login";
     });
 
+// Configuración de HttpClient
+builder.Services.AddHttpClient("BusDataClient", client =>
+{
+    client.BaseAddress = new Uri("http://localhost:3750/data/bus");
+    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+});
+
+// Registrar ApiService
+builder.Services.AddTransient<ApiService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -38,13 +48,3 @@ app.UseSession(); // Añadir soporte de sesión aquí
 app.MapRazorPages();
 
 app.Run();
-
-// Configuración de HttpClient
-builder.Services.AddHttpClient("BusDataClient", client =>
-{
-    client.BaseAddress = new Uri("http://localhost:3750/data/bus");
-    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-});
-
-// Registrar ApiService
-builder.Services.AddTransient<ApiService>();

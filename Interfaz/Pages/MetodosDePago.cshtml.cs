@@ -1,26 +1,51 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Interfaz.Services;
+using System.Threading.Tasks;
 
 namespace Interfaz.Pages
 {
     public class MetodosDePagoModel : PageModel
     {
+        private readonly ApiService _apiService;
+
+        public MetodosDePagoModel(ApiService apiService)
+        {
+            _apiService = apiService;
+        }
+
         public void OnGet()
         {
         }
 
-        public IActionResult OnPost(string metodo, string nombre, string numeroTarjeta, string fechaExpiracion, string cvv, string numeroCuenta, string banco)
+        public async Task<IActionResult> OnPostAsync(string metodo, string nombre, string numeroTarjeta, string fechaExpiracion, string cvv, string numeroCuenta, string banco)
         {
-            // Aquí puedes manejar la lógica del método de pago seleccionado
             if (metodo == "tarjeta")
             {
                 // Lógica para pago con tarjeta
-                // nombre, numeroTarjeta, fechaExpiracion, cvv
+                var pagoTarjeta = new
+                {
+                    NombreTitular = nombre,
+                    NumeroTarjeta = numeroTarjeta,
+                    FechaExpiracion = fechaExpiracion,
+                    CVV = cvv
+                };
+
+                // Aquí puedes llamar a una función del ApiService si necesitas
+                // await _apiService.SomeFunctionAsync(pagoTarjeta);
             }
             else if (metodo == "transferencia")
             {
                 // Lógica para transferencia bancaria
-                // nombre, numeroCuenta, banco
+                var pagoTransferencia = new
+                {
+                    NombreTitular = nombre,
+                    NumeroCuenta = numeroCuenta,
+                    Banco = banco
+                };
+
+                // Aquí puedes llamar a una función del ApiService si necesitas
+                // await _apiService.SomeFunctionAsync(pagoTransferencia);
             }
 
             // Redirigimos a la página de compra exitosa
@@ -28,5 +53,6 @@ namespace Interfaz.Pages
         }
     }
 }
+
 
 

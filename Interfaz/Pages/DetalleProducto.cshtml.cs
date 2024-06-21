@@ -4,23 +4,40 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Interfaz.Services;
+using System.Threading.Tasks;
+using Interfaz.Models;
 
 namespace Interfaz.Pages
 {
     public class DetalleProductoModel : PageModel
     {
+        private readonly ApiService _apiService;
+
+        public DetalleProductoModel(ApiService apiService)
+        {
+            _apiService = apiService;
+        }
+
         public ProductoDetalle Producto { get; private set; }
 
-        public void OnGet(int id, string tienda)
+        public async Task OnGetAsync(int id, string tienda)
         {
-            // Datos de ejemplo
-            var productos = new List<ProductoDetalle>
-            {
-                new ProductoDetalle { Id = 1, Nombre = "Nike Air Max", Precio = 120, Descripcion = "Descripción del Producto 1", Tienda = "Nike", ImagenUrl = "/Imagenes/NikeAirMax.jpg" },
-                new ProductoDetalle { Id = 2, Nombre = "Adidas Ultraboost", Precio = 180, Descripcion = "Descripción del Producto 2", Tienda = "Adidas", ImagenUrl = "/Imagenes/Ultraboost.jpg" }
-            };
+            // Obtener el producto desde el ApiService
+            var productos = await _apiService.GetAllProductosAsync();
 
-            Producto = productos.FirstOrDefault(p => p.Id == id && p.Tienda == tienda);
+            Producto = productos
+                .Where(p => p.Tienda == tienda)
+                .Select(p => new ProductoDetalle
+                {
+                    Id = p.Id,
+                    Nombre = p.Nombre,
+                    Precio = p.Precio,
+                    Descripcion = p.Descripcion,
+                    Tienda = p.Tienda,
+                    ImagenUrl = p.ImagenUrl
+                })
+                .FirstOrDefault(p => p.Id == id);
         }
 
         public IActionResult OnPost(int id, string nombre, decimal precio, string descripcion, string tienda, int cantidad, string imagenUrl)
@@ -49,7 +66,7 @@ namespace Interfaz.Pages
             public decimal Precio { get; set; }
             public string Descripcion { get; set; }
             public string Tienda { get; set; }
-            public string ImagenUrl { get; set; } // Añadir esta propiedad
+            public string ImagenUrl { get; set; }
         }
 
         public class ItemCarrito
@@ -58,8 +75,9 @@ namespace Interfaz.Pages
             public string Nombre { get; set; }
             public decimal Precio { get; set; }
             public int Cantidad { get; set; }
-            public string ImagenUrl { get; set; } // Añadir esta propiedad
+            public string ImagenUrl { get; set; }
         }
     }
 }
+
 

@@ -4,11 +4,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Interfaz.Services;
+using Interfaz.Models;
 
 namespace Interfaz.Pages
 {
     public class LoginModel : PageModel
     {
+        private readonly ApiService _apiService;
+
+        public LoginModel(ApiService apiService)
+        {
+            _apiService = apiService;
+        }
+
         [BindProperty]
         public string Username { get; set; }
 
@@ -21,21 +30,33 @@ namespace Interfaz.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            // Aceptar cualquier combinación de Username y Password
-            var claims = new List<Claim>
+            // Llama al servicio API para autenticar al usuario
+            var usuario = await _apiService.AuthenticateUserAsync(Username, Password);
+
+            if (usuario != null)
             {
-                new Claim(ClaimTypes.Name, Username)
-            };
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, usuario.Nombre) // Usa la propiedad correcta para el nombre del usuario
+                };
 
-            var claimsIdentity = new ClaimsIdentity(claims, "CookieAuth");
-            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                var claimsIdentity = new ClaimsIdentity(claims, "CookieAuth");
+                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-            await HttpContext.SignInAsync("CookieAuth", claimsPrincipal);
+                await HttpContext.SignInAsync("CookieAuth", claimsPrincipal);
 
-            return RedirectToPage("/Index"); 
+                return RedirectToPage("/Index");
+            }
+            else
+            {
+                ViewData["ErrorMessage"] = "Nombre de usuario o contraseña incorrectos.";
+                return Page();
+            }
         }
     }
 }
+
+
 
 
 
